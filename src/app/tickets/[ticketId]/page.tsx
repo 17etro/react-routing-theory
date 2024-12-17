@@ -5,11 +5,13 @@ import { getTicket } from "@/features/ticket/queries/get-ticket";
 const TicketPage = async ({
   params,
 }: {
-  params: {
+  params: Promise<{
     ticketId: string;
-  };
+  }>;
 }) => {
-  const ticket = await getTicket(params.ticketId);
+  const { ticketId } = await params;
+
+  const ticket = await getTicket(ticketId);
 
   if (!ticket) {
     return notFound();

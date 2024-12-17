@@ -6,11 +6,13 @@ import { getTicket } from "@/features/ticket/queries/get-ticket";
 export default async function TicketEditPage({
   params,
 }: {
-  params: {
+  params: Promise<{
     ticketId: string;
-  };
+  }>;
 }) {
-  const ticket = await getTicket(params.ticketId);
+  const { ticketId } = await params;
+
+  const ticket = await getTicket(ticketId);
 
   if (!ticket) {
     return notFound();
